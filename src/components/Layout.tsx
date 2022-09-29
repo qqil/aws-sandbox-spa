@@ -3,7 +3,7 @@ import { FC } from "react";
 import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
 
 const navLinkClasses: NavLinkProps["className"] = ({ isActive }) =>
-  isActive ? ("underline underline-offset-8" as string) : undefined;
+  isActive ? "underline underline-offset-8" : undefined;
 
 const links: { name: string; to: string; end?: boolean }[] = [
   { name: "Home", to: "/", end: true },
