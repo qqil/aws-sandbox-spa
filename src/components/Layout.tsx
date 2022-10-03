@@ -17,7 +17,7 @@ const Layout: FC = () => {
         <Navbar fluid={true} rounded={true} border={true}>
           <Navbar.Brand>
             <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-              My Cloud Store
+              My Cloud Store!
             </span>
           </Navbar.Brand>
 

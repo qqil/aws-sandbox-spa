@@ -1,0 +1,130 @@
+service: shop-spa
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+  profile: default
+  stage: dev
+
+plugins:
+  - serverless-finch
+  - serverless-s3-cleaner
+  - serverless-single-page-app-plugin
+
+custom:
+  s3BucketName: shop-spa
+  distributionFolder: dist
+
+  # serverless-finch
+  client:
+    bucketName: ${self:custom.s3BucketName}
+    distributionFolder: ${self:custom.distributionFolder}
+
+  serverless-s3-cleaner:
+    buckets:
+      - ${self:custom.s3BucketName}
+
+resources:
+  Resources:
+    AppS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.s3BucketName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+
+    AppS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref AppS3Bucket
+        PolicyDocument:
+          Statement:
+            - Action: 
+                - s3:GetObject
+              Effect: Allow
+              Resource: arn:aws:s3:::${self:custom.s3BucketName}/*
+              Principal:
+                AWS: 
+                  Fn::Join:
+                    - " "
+                    - - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity"
+                      - !Ref CloudFrontOAI
+
+    CloudFrontOAI:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: OAI between AppCloudFrontDistribution and AppS3Bucket
+
+    CloudFrontCachePolicy:
+      Type: AWS::CloudFront::CachePolicy
+      Properties:
+        CachePolicyConfig:
+          Name: AppCloudFrontDistributionCachePolicy
+          DefaultTTL: 86400 
+          MinTTL: 86400
+          MaxTTL: 31536000
+          ParametersInCacheKeyAndForwardedToOrigin:
+            EnableAcceptEncodingGzip: true
+            EnableAcceptEncodingBrotli: true
+            HeadersConfig:
+              HeaderBehavior: whitelist
+              Headers:
+                - GET
+                - HEAD
+                - OPTIONS
+            CookiesConfig:
+              CookieBehavior: none
+            QueryStringsConfig: 
+              QueryStringBehavior: none
+
+    CloudFrontRequestPolicy:
+      Type: AWS::CloudFront::OriginRequestPolicy
+      Properties:
+        OriginRequestPolicyConfig:
+          Name: AppCloudFrontDistributionRequestPolicy
+          CookiesConfig:
+            CookieBehavior: none
+          HeadersConfig:
+            HeaderBehavior: whitelist
+            Headers:
+              - Access-Control-Request-Headers
+              - Access-Control-Request-Method
+              - Origin
+          QueryStringsConfig:
+            QueryStringBehavior: all
+
+    AppCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Enabled: true
+          HttpVersion: http2and3
+          Origins:
+            - Id: AppS3Origin
+              DomainName: !GetAtt AppS3Bucket.RegionalDomainName
+              S3OriginConfig:
+                OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOAI}
+          DefaultCacheBehavior:
+            TargetOriginId: AppS3Origin
+            ViewerProtocolPolicy: redirect-to-https
+            OriginRequestPolicyId: !Ref CloudFrontRequestPolicy
+            CachePolicyId: !Ref CloudFrontCachePolicy
+            Compress: true
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: true
+          DefaultRootObject: index.html
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+  
+  # Outputs used by serverless-single-page-app-plugin
+  Outputs:
+    WebAppS3BucketOutput:
+      Value: !Ref AppS3Bucket
+    WebAppCloudFrontDistributionOutput:
+      Value: !GetAtt AppCloudFrontDistribution.DomainName
