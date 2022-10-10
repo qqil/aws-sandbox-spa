@@ -1,4 +1,6 @@
 .serverless
+.env*
+!.env.example
 
 # Logs
 logs

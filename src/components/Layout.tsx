@@ -24,9 +24,11 @@ const Layout: FC = () => {
           <Navbar.Toggle />
           <Navbar.Collapse>
             {links.map(({ name, to, end }) => (
-              <NavLink key={to} to={to} end={end} className={navLinkClasses}>
-                {name}
-              </NavLink>
+              <li key={to}>
+                <NavLink to={to} end={end} className={navLinkClasses}>
+                  {name}
+                </NavLink>
+              </li>
             ))}
           </Navbar.Collapse>
         </Navbar>
