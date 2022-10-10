@@ -8,9 +8,6 @@ export const useGetProductsListQuery = () => {
       import.meta.env["PUBLIC_API_PRODUCTS_SERVICE"]
     );
 
-    url.searchParams.set("page", "1");
-    url.searchParams.set("limit", "5");
-
     const response = await fetch(url);
     const { products } = await response.json();
 
