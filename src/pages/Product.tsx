@@ -13,11 +13,11 @@ const ProductPage: FC = (props) => {
   const {
     isLoading,
     data: product,
-    isSuccess,
+    isError,
   } = useGetProductsByIdQuery(productId);
   const addToCartMutation = useAddToCartMutation();
 
-  if (isSuccess && !product) return <h1>Product not found</h1>;
+  if (isError) return <h1>Product not found</h1>;
 
   return (
     <>
