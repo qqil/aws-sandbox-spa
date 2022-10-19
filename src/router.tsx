@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import HomePage from "./pages/Home";
 import ProductPage from "./pages/Product";
+import ProductCreatePage from "./pages/ProductCreate";
 import ProductsListPage from "./pages/ProductsList";
 
 const Router: FC = () => (
@@ -12,6 +13,7 @@ const Router: FC = () => (
         <Route index element={<HomePage />} />
         <Route path="products" element={<ProductsListPage />} />
         <Route path="products/:productId" element={<ProductPage />} />
+        <Route path="products/create" element={<ProductCreatePage />} />
       </Route>
     </Routes>
   </BrowserRouter>

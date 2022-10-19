@@ -7,7 +7,8 @@ const navLinkClasses: NavLinkProps["className"] = ({ isActive }) =>
 
 const links: { name: string; to: string; end?: boolean }[] = [
   { name: "Home", to: "/", end: true },
-  { name: "Products", to: "/products" },
+  { name: "Products", to: "/products", end: true },
+  { name: "Create product", to: "/products/create", end: true },
 ];
 
 const Layout: FC = () => {
