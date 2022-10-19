@@ -9,7 +9,7 @@ const ProductCreatePage: FC = () => {
       </h1>
 
       <div className="flex justify-center">
-        <div className="basis-1/4">
+        <div className="basis-80">
           <ProductCreateForm />
         </div>
       </div>
