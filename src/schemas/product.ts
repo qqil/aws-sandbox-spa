@@ -1,12 +1,17 @@
 import * as Yup from "yup";
 
-export const productSchema = Yup.object({
+const baseSchema = {
   id: Yup.string().required(),
-  title: Yup.string().required(),
-  description: Yup.string().required().default(""),
+  title: Yup.string().min(3).required(),
+  description: Yup.string().default(""),
   price: Yup.number().min(0).required(),
-  quantity: Yup.number().min(0).required().default(0),
-});
+  stocks: Yup.number().min(0).required(),
+};
+const { id, ...productSchemaWithoutId } = baseSchema;
+
+export const productSchema = Yup.object(baseSchema);
+export const createProductSchema = Yup.object(productSchemaWithoutId);
 
 export const productArraySchema = Yup.array(productSchema);
 export type Product = Yup.InferType<typeof productSchema>;
+export type CreateProduct = Yup.InferType<typeof createProductSchema>;

@@ -21,6 +21,10 @@ const ProductCard: FC<{ product: Product }> = ({ product }) => {
         <div>
           <span>{product.description}</span>
         </div>
+        <div>
+          <span className="font-bold">In stock: </span>
+          <span>{product.stocks}</span>
+        </div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
             {formatPrice(product.price.toString())}
