@@ -1,14 +1,15 @@
 import { useQuery } from "react-query";
-import { Product, productSchema } from "../schemas/product";
+import { ProductSchema, productSchemaObject } from "../schemas/product";
+import { ensureTrailingSlash } from "../utils/url";
 
 export const useGetProductsByIdQuery = (productId: string) => {
-  return useQuery<Product | undefined>(
+  return useQuery<ProductSchema | undefined>(
     ["getProductsById", productId],
     async () => {
       const response = await fetch(
         new URL(
-          `products/${productId}`,
-          import.meta.env["PUBLIC_API_PRODUCTS_SERVICE"]
+          `./products/${productId}`,
+          ensureTrailingSlash(import.meta.env["PUBLIC_API_PRODUCTS_SERVICE"])
         )
       );
 
@@ -16,8 +17,8 @@ export const useGetProductsByIdQuery = (productId: string) => {
 
       if (!product) return undefined;
 
-      const validatedProduct = await productSchema.validate(
-        productSchema.cast(product)
+      const validatedProduct = await productSchemaObject.validate(
+        productSchemaObject.cast(product)
       );
 
       return validatedProduct;

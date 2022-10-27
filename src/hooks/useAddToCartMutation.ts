@@ -1,8 +1,8 @@
 import { useMutation } from "react-query";
-import { Product } from "../schemas/product";
+import { ProductSchema } from "../schemas/product";
 
 export const useAddToCartMutation = () => {
-  return useMutation((product: Product) => {
+  return useMutation((product: ProductSchema) => {
     throw new Error("Not implemented");
   });
 };
