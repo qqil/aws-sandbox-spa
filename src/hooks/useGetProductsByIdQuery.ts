@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
-import { ProductSchema, productSchemaObject } from "../schemas/product";
+import { Product, productSchema } from "../schemas/product";
 import { ensureTrailingSlash } from "../utils/url";
 
 export const useGetProductsByIdQuery = (productId: string) => {
-  return useQuery<ProductSchema | undefined>(
+  return useQuery<Product | undefined>(
     ["getProductsById", productId],
     async () => {
       const response = await fetch(
@@ -17,9 +17,7 @@ export const useGetProductsByIdQuery = (productId: string) => {
 
       if (!product) return undefined;
 
-      const validatedProduct = await productSchemaObject.validate(
-        productSchemaObject.cast(product)
-      );
+      const validatedProduct = await productSchema.validate(product);
 
       return validatedProduct;
     }

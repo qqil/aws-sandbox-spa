@@ -2,10 +2,10 @@ import { Card } from "flowbite-react";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useAddToCartMutation } from "../hooks/useAddToCartMutation";
-import { ProductSchema } from "../schemas/product";
+import { Product } from "../schemas/product";
 import { formatPrice } from "../utils/format-price";
 
-const ProductCard: FC<{ product: ProductSchema }> = ({ product }) => {
+const ProductCard: FC<{ product: Product }> = ({ product }) => {
   const addToCartMutation = useAddToCartMutation();
 
   return (
@@ -46,7 +46,7 @@ const ProductCard: FC<{ product: ProductSchema }> = ({ product }) => {
 };
 
 const ProductsList: FC<{
-  products: ProductSchema[];
+  products: Product[];
 }> = ({ products }) => (
   <section className="flex flex-row flex-wrap gap-4 justify-center">
     {products.map((product) => (

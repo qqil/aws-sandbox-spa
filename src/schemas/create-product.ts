@@ -1,9 +1,7 @@
-import { productSchema } from "./product";
+import { productSchemaObject } from "./product";
 import * as Yup from "yup";
 
-const { id, ...productSchemaWithoutId } = productSchema;
+const { id, ...productSchemaWithoutId } = productSchemaObject;
 
-export const createProductSchemaObject = Yup.object(productSchemaWithoutId);
-export type CreateProductSchema = Yup.InferType<
-  typeof createProductSchemaObject
->;
+export const createProductSchema = Yup.object(productSchemaWithoutId);
+export type CreateProduct = Yup.InferType<typeof createProductSchema>;

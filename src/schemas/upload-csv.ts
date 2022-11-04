@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const uploadCsvSchemaObject = Yup.object({
+export const uploadCsvSchema = Yup.object({
   file: Yup.mixed()
     .test((value) => {
       if (value.length > 1 || !value.length) return false;
@@ -12,4 +12,4 @@ export const uploadCsvSchemaObject = Yup.object({
     .required(),
 });
 
-export type UploadCsvSchema = Yup.InferType<typeof uploadCsvSchemaObject>;
+export type UploadCsv = Yup.InferType<typeof uploadCsvSchema>;

@@ -3,7 +3,7 @@ import { Alert, Button, FileInput } from "flowbite-react";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useUploadCSVMutation } from "../hooks/useUploadCSVMutation";
-import { UploadCsvSchema, uploadCsvSchemaObject } from "../schemas/upload-csv";
+import { UploadCsv, uploadCsvSchema } from "../schemas/upload-csv";
 
 const ProductsImportForm: FC = () => {
   const {
@@ -11,8 +11,8 @@ const ProductsImportForm: FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UploadCsvSchema>({
-    resolver: yupResolver(uploadCsvSchemaObject),
+  } = useForm<UploadCsv>({
+    resolver: yupResolver(uploadCsvSchema),
   });
 
   const {

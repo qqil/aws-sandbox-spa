@@ -10,10 +10,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateProductMutation } from "../hooks/useCreateProductMutation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  CreateProductSchema,
-  createProductSchemaObject,
-} from "../schemas/create-product";
+import { CreateProduct, createProductSchema } from "../schemas/create-product";
 
 export const ProductCreateForm: FC = () => {
   const {
@@ -21,8 +18,8 @@ export const ProductCreateForm: FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<CreateProductSchema>({
-    resolver: yupResolver(createProductSchemaObject),
+  } = useForm<CreateProduct>({
+    resolver: yupResolver(createProductSchema),
   });
 
   const {

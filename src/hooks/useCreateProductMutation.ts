@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "react-query";
-import { CreateProductSchema } from "../schemas/create-product";
-import { ProductSchema } from "../schemas/product";
+import { CreateProduct } from "../schemas/create-product";
+import { Product } from "../schemas/product";
 import { ensureTrailingSlash } from "../utils/url";
 
 export const useCreateProductMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (product: CreateProductSchema): Promise<ProductSchema> => {
+    async (product: CreateProduct): Promise<Product> => {
       try {
         const response = await fetch(
           new URL(
