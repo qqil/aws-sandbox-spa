@@ -5,7 +5,7 @@ import { useAddToCartMutation } from "../hooks/useAddToCartMutation";
 import { useGetProductsByIdQuery } from "../hooks/useGetProductsByIdQuery";
 import { formatPrice } from "../utils/format-price";
 
-const ProductPage: FC = (props) => {
+const ProductPage: FC = () => {
   const { productId } = useParams();
 
   if (!productId) return <h1>`productId` is not defined</h1>;
@@ -53,7 +53,7 @@ const ProductPage: FC = (props) => {
 
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {formatPrice(product.price.toString())}
+                  {formatPrice(product.price)}
                 </span>
                 <a
                   href="#"

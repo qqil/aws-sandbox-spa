@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/Home";
 import ProductPage from "./pages/Product";
 import ProductCreatePage from "./pages/ProductCreate";
+import ProductsImportPage from "./pages/ProductsImport";
 import ProductsListPage from "./pages/ProductsList";
 
 const Router: FC = () => (
@@ -14,6 +15,7 @@ const Router: FC = () => (
         <Route path="products" element={<ProductsListPage />} />
         <Route path="products/:productId" element={<ProductPage />} />
         <Route path="products/create" element={<ProductCreatePage />} />
+        <Route path="import" element={<ProductsImportPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

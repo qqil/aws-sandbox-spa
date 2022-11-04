@@ -1,4 +1,4 @@
-import { Card, Pagination } from "flowbite-react";
+import { Card } from "flowbite-react";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useAddToCartMutation } from "../hooks/useAddToCartMutation";
@@ -27,7 +27,7 @@ const ProductCard: FC<{ product: Product }> = ({ product }) => {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            {formatPrice(product.price.toString())}
+            {formatPrice(product.price)}
           </span>
 
           <button

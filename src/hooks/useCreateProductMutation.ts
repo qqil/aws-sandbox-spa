@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
-import { CreateProduct, Product } from "../schemas/product";
+import { CreateProduct } from "../schemas/create-product";
+import { Product } from "../schemas/product";
+import { ensureTrailingSlash } from "../utils/url";
 
 export const useCreateProductMutation = () => {
   const queryClient = useQueryClient();
@@ -8,7 +10,10 @@ export const useCreateProductMutation = () => {
     async (product: CreateProduct): Promise<Product> => {
       try {
         const response = await fetch(
-          new URL("products", import.meta.env["PUBLIC_API_PRODUCTS_SERVICE"]),
+          new URL(
+            "./products",
+            ensureTrailingSlash(import.meta.env["PUBLIC_API_PRODUCTS_SERVICE"])
+          ),
           {
             method: "POST",
             body: JSON.stringify(product),

@@ -9,6 +9,7 @@ const links: { name: string; to: string; end?: boolean }[] = [
   { name: "Home", to: "/", end: true },
   { name: "Products", to: "/products", end: true },
   { name: "Create product", to: "/products/create", end: true },
+  { name: "Import", to: "import" },
 ];
 
 const Layout: FC = () => {

@@ -9,8 +9,8 @@ import {
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateProductMutation } from "../hooks/useCreateProductMutation";
-import { CreateProduct, createProductSchema } from "../schemas/product";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CreateProduct, createProductSchema } from "../schemas/create-product";
 
 export const ProductCreateForm: FC = () => {
   const {

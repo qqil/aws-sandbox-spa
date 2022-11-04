@@ -1,2 +1,6 @@
-export const formatPrice = (price: string, currency = "$") =>
-  `${Number.parseFloat(price).toFixed(2)}${currency}`;
+const { format } = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
+export const formatPrice = (price: number) => format(price);
