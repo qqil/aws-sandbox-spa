@@ -59,7 +59,7 @@ const ProductsImportForm: FC = () => {
         <>
           <Alert color={"failure"}>
             <span className="font-medium">Error! </span>
-            <span>{mutationError as string}</span>
+            <span>{(mutationError as Error).message}</span>
           </Alert>
           <div className="mb-2"></div>
         </>

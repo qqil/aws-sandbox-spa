@@ -109,7 +109,7 @@ export const ProductCreateForm: FC = () => {
       {isError && (
         <Alert color={"failure"}>
           <span className="font-medium">Error! </span>
-          <span>{mutationError as string}</span>
+          <span>{(mutationError as Error).message}</span>
         </Alert>
       )}
 
