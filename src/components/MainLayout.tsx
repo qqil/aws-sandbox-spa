@@ -1,6 +1,7 @@
-import { Navbar } from "flowbite-react";
+import { Button, Navbar } from "flowbite-react";
 import { FC } from "react";
-import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
+import { NavLink, NavLinkProps, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const navLinkClasses: NavLinkProps["className"] = ({ isActive }) =>
   isActive ? "underline underline-offset-8" : undefined;
@@ -9,10 +10,13 @@ const links: { name: string; to: string; end?: boolean }[] = [
   { name: "Home", to: "/", end: true },
   { name: "Products", to: "/products", end: true },
   { name: "Create product", to: "/products/create", end: true },
-  { name: "Import", to: "import" },
+  { name: "Import", to: "/import" },
 ];
 
-const Layout: FC = () => {
+const MainLayout: FC = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <>
       <header className="container mx-auto mt-2">
@@ -33,6 +37,12 @@ const Layout: FC = () => {
               </li>
             ))}
           </Navbar.Collapse>
+          {!user && (
+            <Button onClick={() => navigate("/auth/login")}>Login</Button>
+          )}
+          {user && (
+            <Button onClick={() => logout({ redirectTo: "/" })}>Logout</Button>
+          )}
         </Navbar>
       </header>
 
@@ -43,4 +53,4 @@ const Layout: FC = () => {
   );
 };
 
-export default Layout;
+export default MainLayout;
