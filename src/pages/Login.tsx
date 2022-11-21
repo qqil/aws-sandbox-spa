@@ -1,29 +1,31 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductCreateForm } from "../components/ProductCreateForm";
+import { LoginForm } from "../components/LoginForm";
 import { useAuth } from "../hooks/useAuth";
 
-const ProductCreatePage: FC = () => {
+const LoginPage: FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) navigate("/auth/login");
+    if (user) {
+      navigate("/");
+    }
   }, [user]);
 
   return (
     <>
       <h1 className="text-xl text-center font-semibold tracking-tight text-gray-900 dark:text-white my-5">
-        Create product
+        Login
       </h1>
 
       <div className="flex justify-center">
-        <div className="basis-80">
-          <ProductCreateForm />
-        </div>
+        {/* <div className="basis-80"> */}
+        <LoginForm />
+        {/* </div> */}
       </div>
     </>
   );
 };
 
-export default ProductCreatePage;
+export default LoginPage;
